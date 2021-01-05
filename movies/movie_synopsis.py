@@ -45,11 +45,11 @@ def choose_movie():
 #Ask if user would like to choose another movie or exit
 def choose_again():
     while True:
-        user_choice = input("Would you like to choose another movie? y/n: ")
-        if user_choice.lower() == "y":
+        user_choice = input("Would you like to choose another movie? y/n: ").strip().lower()
+        if user_choice == "y":
             choose_movie()
             break
-        elif user_choice.lower() == "n":
+        elif user_choice == "n":
             break
         else:
             print("Please type either y or n")
