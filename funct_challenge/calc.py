@@ -8,6 +8,7 @@
 """
 
 #get user input 2 numbers, 1 operator
+##validates and adds user input numbers into list
 def getUserData():
     operators = ["+", "-", "/", "*"]
     calcToBeMade = []
@@ -26,7 +27,9 @@ def getUserData():
             else:
                 print(f"Please enter one of the following from this list - {operators}\n")
 
+    #sending list to be calculated by calculate() function
     calculate(calcToBeMade)
+    #checking if user wants to calculate some more
     calcAgain()
 
 
@@ -50,7 +53,7 @@ def calculate(calcList):
         else:
             res = num1 / num2
 
-    print(f"The value of {num1} {op} {num2} = {res}\n")
+    print(f"\nThe value of {num1} {op} {num2} = {res}\n")
 
 
 #ask if user wants to do another calculation or quit
