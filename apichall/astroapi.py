@@ -10,13 +10,13 @@
 import requests
 
 def main():
-    req = requests.get("http://api.open-notify.org/astros.json")
+    req = requests.get("http://api.open-notify.org/astros.json").json()
 
-    totalInSpace = req.json().get("number")
+    totalInSpace = req.get("number")
     print(f"People in space: {totalInSpace}")
     for num in range(0, totalInSpace):
-        name = req.json().get("people")[num].get("name")
-        craft = req.json().get("people")[num].get("craft")
+        name = req.get("people")[num].get("name")
+        craft = req.get("people")[num].get("craft")
         print(f"{name} is on the {craft}")
 
 main()
