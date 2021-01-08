@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import random as rand
+
 # Replace RPG starter project with this code when new instructions are live
 
 def showInstructions():
@@ -25,6 +27,62 @@ def showStatus():
   if "item" in rooms[currentRoom]:
     print('You see a ' + rooms[currentRoom]['item'])
   print("---------------------------")
+
+#function for combat
+#user battles monster
+def combat():
+    user_health = 100
+    monster_health = 10
+
+    while True:
+
+        #allow user to attack or defend
+        atkOrDef = choose_atk_def()
+        if atkOrDef == 'a':
+            dmg = rand.randint(1, 35)
+            monster_health -= dmg
+            print(f"You swing your mighty fist and caused {dmg} damage to the monster")
+            if monster_health <= 0:
+                break
+            monst_dmg = rand.randint(5, 40)
+            user_health -= monst_dmg
+            print(f"The monster strikes back causing {monst_dmg} damage to you\n")
+            if user_health <= 0:
+                break
+        else:
+            monst_dmg = rand.randint(5, 40)
+            blockDmg = monst_dmg 
+            user_health -= blockDmg
+            print(f"You have chosen to block, monster takes a swipe at you and caused {blockDmg} damage")
+            if user_health <= 0:
+                break
+            dmgToMonst = monst_dmg * 0.25
+            print(f"You're block has casued {dmgToMonst} damage to the monster\n")
+            if monster_health <= 0:
+                break
+        print(f"user health {user_health}, monster {monster_health}")
+
+    #check who lived
+    survivor = "user" if user_health > 0 else "monster"
+    return survivor
+
+
+#allow user to choose wheter to block or atck
+def choose_atk_def():
+    atkOrDef = ''
+    while True:
+        print("Would you like to attack or block? type (a or b)")
+        choice = input(">> ").strip().lower()
+        if choice == 'a':
+            atkOrDef = choice
+            break
+        elif choice == 'b':
+            atkOrDef = choice
+            break
+        else:
+            print(f"{choice} is not a valid option")
+
+    return atkOrDef
 
 #an inventory, which is initially empty
 inventory = []
@@ -101,9 +159,15 @@ while True:
       #tell them they can't get it
       print('Can\'t get ' + move[1] + '!')
   ## If a player enters a room with a monster
-  if 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-    print('A monster has got you... GAME OVER!')
-    break
+  if 'item' in rooms[currentRoom] and rooms[currentRoom]['item'] == 'monster':
+    print("Oh no a monster! You must fight for your life")  
+    survivor = combat()
+    if survivor == 'monster':
+        print("The monster has devoured you!\nGame Over...")
+        break
+    else:
+        rooms[currentRoom]['item'] = 'dead monster'
+    print("You have vanquished the monster! Continue on your quest to escape")
   ## Define how a player can win
   if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
     print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
