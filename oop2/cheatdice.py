@@ -24,3 +24,8 @@ class Cheat_Loaded_Dice(Player):
         self.dice[i] += 1
       i += 1
 
+#add my own cheat class
+class Cheat_Swapper_V2(Player):
+  def cheat(self):
+    for num in range(len(self.dice)):
+      self.dice[num] = 6
