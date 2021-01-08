@@ -32,31 +32,31 @@ def showStatus():
 #user battles monster
 def combat():
     user_health = 100
-    monster_health = 10
+    monster_health = 100
 
     while True:
-
         #allow user to attack or defend
-        atkOrDef = choose_atk_def()
-        if atkOrDef == 'a':
-            dmg = rand.randint(1, 35)
-            monster_health -= dmg
-            print(f"You swing your mighty fist and caused {dmg} damage to the monster")
+        if choose_atk_def() == 'a':
+            user_dmg = user_atk()
+            monster_health -= user_dmg
+            print(f"You swing your mighty fist and caused {user_dmg} damage to the monster")
             if monster_health <= 0:
                 break
-            monst_dmg = rand.randint(5, 40)
+            monst_dmg = monster_atk()
             user_health -= monst_dmg
             print(f"The monster strikes back causing {monst_dmg} damage to you\n")
             if user_health <= 0:
                 break
+        #user blocked    
         else:
-            monst_dmg = rand.randint(5, 40)
-            blockDmg = monst_dmg 
-            user_health -= blockDmg
-            print(f"You have chosen to block, monster takes a swipe at you and caused {blockDmg} damage")
+            monst_dmg = user_blk() 
+            user_health -= monst_dmg
+            print(f"You have chosen to block, monster takes a swipe at you and caused {monst_dmg} damage")
             if user_health <= 0:
                 break
-            dmgToMonst = monst_dmg * 0.25
+            #blocking deals 50% of damage dealt by monster
+            dmgToMonst = monst_dmg * 0.5
+            monster_health -= dmgToMonst
             print(f"You're block has casued {dmgToMonst} damage to the monster\n")
             if monster_health <= 0:
                 break
@@ -83,6 +83,24 @@ def choose_atk_def():
             print(f"{choice} is not a valid option")
 
     return atkOrDef
+
+#user attack function
+def user_atk():
+    dmg = 0
+    dmg = rand.randint(1, 35)
+    return dmg
+
+#monster attack function
+def monster_atk():
+    dmg = rand.randint(5, 35)
+    return dmg
+
+#blocked attack
+#when user blocks they avoid 50% of attack damage
+def user_blk():
+    dmg = monster_atk()
+    dmg /= 2
+    return dmg
 
 #an inventory, which is initially empty
 inventory = []
