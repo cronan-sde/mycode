@@ -9,13 +9,17 @@ class Player:
     for i in range(3):
       self.dice.append(randint(1,6))
 
+  def cheat(self):
+    self.roll()
+    self.dice.append(randint(1,6))
+
   def get_dice(self):
     return self.dice
 
 player1 = Player()
 player2 = Player()
 
-player1.roll()
+player1.cheat()
 player2.roll()
 
 print("Player 1 rolled" + str(player1.get_dice()))
