@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+"""
+    Author: Cody Cronberger
+    Allows users to get data on a pokemon of their choice by utilizing
+    Pokemon API
+
+"""
+
 #import requests to easily access api
 import requests
 
@@ -45,12 +52,14 @@ def displayPokemon(name, imgUrl, gameCount, moves):
             print(move)
         else:
             print(move, end=",")
-
+                
 
 #save image to file
+#req.content returns response content in bytes
+#wb argument means write in binary mode so we can write the image
 def savePokemonImg(name, imgUrl):
     req = requests.get(imgUrl)
-    with open(f"{name}.png", "wb") as f:
+    with open(f"/home/student/static/{name}.png", "wb") as f:
         f.write(req.content)
 
 
